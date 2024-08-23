@@ -12,10 +12,7 @@ class ProductAddScreen extends StatefulWidget {
 }
 
 class _ProductAddScreenState extends State<ProductAddScreen> {
-  bool isService = false; // Variable para controlar el tipo seleccionado
-  List<VariantField> variantFields = [];
   File? _image;
-  String _imageExtencion = "jpeg";
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -28,10 +25,6 @@ class _ProductAddScreenState extends State<ProductAddScreen> {
     _descriptionController.dispose();
     _cantidadController.dispose();
     _precioProductoController.dispose();
-    for (var field in variantFields) {
-      field.precioController.dispose();
-      field.duracionController.dispose();
-    }
     super.dispose();
   }
 
@@ -63,7 +56,7 @@ Future<void> storeProduct() async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Crear un producto/servicio'),
+        title: const Text('Crear un Producto'),
         centerTitle: true,
       ),
       backgroundColor: const Color(0xFFF0F0F0),
@@ -153,11 +146,4 @@ Future<void> storeProduct() async {
       ),
     );
   }
-}
-
-class VariantField {
-  final TextEditingController precioController;
-  final TextEditingController duracionController;
-
-  VariantField(this.precioController, this.duracionController);
 }
