@@ -1,6 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:sysman_prueba/models/product.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper _instance = DatabaseHelper._internal();
@@ -17,8 +17,7 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDatabase() async {
-    final documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, 'my_database.db');
+    String path = join(await getDatabasesPath(), 'productos.db');
     return await openDatabase(
       path,
       version: 1,
@@ -28,32 +27,60 @@ class DatabaseHelper {
 
   Future<void> _createDb(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE items(
+      CREATE TABLE productos(
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        name TEXT,
-        description TEXT
+        nombre TEXT,
+        descripcion TEXT,
+        precio REAL,
+        imagen TEXT
       )
     ''');
   }
 
-  Future<int> insertItem(Map<String, dynamic> row) async {
+  Future<int> insertProduct(Producto producto) async {
     Database db = await database;
-    return await db.insert('items', row);
+    return await db.insert('productos', producto.toMap());
   }
 
-  Future<List<Map<String, dynamic>>> getItems() async {
+  Future<List<Producto>> getProductos() async {
     Database db = await database;
-    return await db.query('items');
+    final List<Map<String, dynamic>> maps = await db.query('productos');
+    
+    return List.generate(maps.length, (i) {
+      return Producto.fromMap(maps[i]);
+    });
   }
 
-  Future<int> updateItem(Map<String, dynamic> row) async {
+  Future<Producto?> getProducto(int id) async {
     Database db = await database;
-    int id = row['id'];
-    return await db.update('items', row, where: 'id = ?', whereArgs: [id]);
+    final List<Map<String, dynamic>> maps = await db.query(
+      'productos',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+
+    if (maps.isNotEmpty) {
+      return Producto.fromMap(maps.first);
+    }
+    return null;
   }
 
-  Future<int> deleteItem(int id) async {
+  Future<int> updateProducto(Producto producto) async {
     Database db = await database;
-    return await db.delete('items', where: 'id = ?', whereArgs: [id]);
+    return await db.update(
+      'productos',
+      producto.toMap(),
+      where: 'id = ?',
+      whereArgs: [producto.id],
+    );
+  }
+
+  Future<int> deleteProducto(int id) async {
+    Database db = await database;
+    return await db.delete(
+      'productos',
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 }
