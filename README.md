@@ -4,6 +4,19 @@
 
 Esta aplicación es una solución para la prueba técnica de Sysman. Consiste en una aplicación móvil desarrollada en Flutter que permite gestionar un catálogo de productos. La aplicación incluye funcionalidades como listar productos, agregar nuevos productos, buscar productos por nombre y cambiar entre temas claro y oscuro.
 
+## Capturas de Pantalla
+
+Aquí tienes algunas capturas de pantalla del proyecto:
+
+![Captura de Pantalla 1](assets/screenhops/screen_home.png)
+![Captura de Pantalla 2](assets/screenhops/screen_form.png)
+
+## Prototipo Figma
+
+Aquí tienes el link del prototipo en Figma:
+
+[https://www.figma.com/proto/JVGqO773NevLzffpC8xtTk/Untitled?node-id=0-1&t=aTw8FGRLTNDGWgNi-1](https://www.figma.com/proto/JVGqO773NevLzffpC8xtTk/Untitled?node-id=0-1&t=aTw8FGRLTNDGWgNi-1).
+
 ## Características Principales
 
 - **Listado de Productos**: Visualización de todos los productos en una lista scrollable.
